@@ -1,4 +1,4 @@
-(ns aoc24.util
+(ns aoc25.util
   (:require [clojure.string :as str]
             [clojure.edn :as edn]
             [clojure.pprint :as pp]
