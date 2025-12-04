@@ -53,8 +53,8 @@
          (apply +))))
 
 (comment
-  (def testf "data/day02-test.txt")
-  (def inputf "data/day02-input.txt")
+  (def testf "data/day03-test.txt")
+  (def inputf "data/day03-input.txt")
 
   (part1 testf)
   (part1 inputf)
