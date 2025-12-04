@@ -1,4 +1,4 @@
-(ns aoc25.day02
+(ns aoc25.day03
   (:require [clojure.string :as str]
             [aoc25.util :as util]))
 
@@ -56,15 +56,10 @@
   (def testf "data/day02-test.txt")
   (def inputf "data/day02-input.txt")
 
-  ;; Test cases
-  (largest-12 [9 8 7 6 5 4 3 2 1 0 9 8 7 6]) ;; Should return 987654329876
-  (largest-12 [1 2 3 4 5 6 7 8 9 0 1 2 3 4]) ;; Should return 45678901234
-  (largest-12 [1 2 3]) ;; Should return nil
-  (largest-12 [1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6]) ;; Should return 7890123456
-  
   (part1 testf)
   (part1 inputf)
 
   (time (part2 testf))
-  (time (part2 inputf))
-  )
+  (time (part2 inputf)))
+  
+# The End
