@@ -191,6 +191,7 @@
 
 ;;--------------------------------
 ;; Matrix functions
+
 (defn mat-find-all
   "Find all the indices of a in mat"
   [mat a]
