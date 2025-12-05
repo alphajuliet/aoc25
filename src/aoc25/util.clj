@@ -50,6 +50,11 @@
   {:pre [(>= (count coll) 3)]}
   (nth coll 2))
 
+(defn diff 
+  "Return the pairwise difference between successive elements in coll"
+  [coll] 
+  (map - (rest coll) coll))
+
 (def T
   "Transpose a list of lists"
   (partial apply mapv vector))
