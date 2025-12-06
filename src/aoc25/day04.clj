@@ -31,9 +31,22 @@
   (if (pos-int? (util/safe-mget mat coord))
     (->> (neighbours mat coord)
          (filter #(= 1 %))
-         count) 
+         count)
     nil))
-    
+
+(defn remove-rolls
+  "Remove all the rolls that have fewer than 4 neighbours"
+  [mat]
+  (let [ii (m/index-seq mat)
+        cc (map (partial count-neighbours mat) ii)]
+    (->> (zipmap ii cc)
+         (remove #(or (nil? (val %))
+                      (>= (val %) 4)))
+         ;; Set those positions to 0
+         (reduce (fn [acc e]
+                   (apply m/mset acc (conj (first e) 0)))
+                 mat))))
+
 (defn part1
   [f]
   (let [mat (read-data f)]
@@ -44,14 +57,30 @@
          (filter #(< % 4))
          count)))
 
+(defn part2
+  [f]
+  (let [mat (read-data f)]
+    ;; Iteratively remove rolls until stable
+    (->> (reduce
+          (fn [curr-mat _]
+            (let [new-mat (remove-rolls curr-mat)]
+              (if (m/e= new-mat curr-mat)
+                (reduced new-mat)
+                new-mat)))
+          mat
+          (range 100))
+         ;; Count how many were removed
+         m/esum
+         (- (m/esum mat)))))
+
 (comment
   (def testf "data/day04-test.txt")
   (def inputf "data/day04-input.txt")
 
   (part1 testf)
-  (part1 inputf))
+  (part1 inputf)
 
-  ;; (part2 testf)
-  ;; (part2 inputf))
+  (part2 testf)
+  (part2 inputf))
 
 ;; The End
