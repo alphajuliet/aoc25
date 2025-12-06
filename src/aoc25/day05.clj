@@ -1,7 +1,6 @@
 (ns aoc25.day05
   (:require [aoc25.util :as u]
             [clojure.string :as str]
-            [clojure.set :as set]
             [clojure.edn :as edn]))
 
 (defn to-range
