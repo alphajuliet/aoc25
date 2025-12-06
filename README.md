@@ -22,3 +22,7 @@ The first part is simple enough, find the biggest digit before the last, and the
 
 Part 1 is a straightforward matrix neighbour count thing, like we've done many times before in AoC. I converted the symbols into numbers to make it easier to calculate but it could all be done as characters. And on to part 2, where we need to iterate on removing rolls until we can't remove any more. Bring on my lucky `reduce/reduced` function.
 
+## Day 5
+
+Again, part 1 can be solved with an obvious solution, which is to count each number that sits within the lower and upper bounds of one of the ranges. Sorting the ranges first reduces the effort slightly. Part 2 is the usual problem of scale where we are dealing with very large ranges and we want to avoid enumerating them, and instead just keep a running list of the lower and upper bounds of all the ranges and adjusting for full or partial overlaps.
+
