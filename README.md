@@ -25,3 +25,7 @@ Part 1 is a straightforward matrix neighbour count thing, like we've done many t
 ## Day 5
 
 Again, part 1 can be solved with an obvious solution, which is to count each number that sits within the lower and upper bounds of one of the ranges. Sorting the ranges first reduces the effort slightly. Part 2 is the usual problem of scale where we are dealing with very large ranges and we want to avoid enumerating them, and instead just keep a running list of the lower and upper bounds of all the ranges and adjusting for full or partial overlaps.
+
+## Day 6
+
+This was an amusing little exercise in parsing formatted text data. Part 1 was trivial, but part 2 required a lot of splitting and converting vertical digits into numbers. Clojure has a powerful set of functions and predicates for manipulating data; one of the reasons I like it. Not the most elegant code I've written but it got us there. 
