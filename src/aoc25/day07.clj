@@ -31,8 +31,30 @@
   (reduce split-beam beams splitter-locs))
 
 (defn generate-beams
- [start splitters]
- (reductions row-splits #{start} splitters))
+  [start splitters]
+  (reductions row-splits #{start} splitters))
+
+(defn split-beam-multiple
+  "Split a beam if it hits the location of the splitter. Record
+   all beams as a map of multiplicities. Capture multiplicities, i.e. if 2 beams hit
+   the splitter then 4 beams are generated: 2 on each side."
+  [beams loc]
+  (if (contains? beams loc)
+    (let [n (get beams loc)]
+      (-> beams
+          (update (dec loc) #(if % (+ % n) n))
+          (update (inc loc) #(if % (+ % n) n))
+          (assoc loc 0))) 
+              
+    beams))
+
+(defn row-splits-multiple
+  [beams splitter-locs]
+  (reduce split-beam-multiple beams splitter-locs))
+
+(defn generate-beams-multiple
+  [start splitters]
+  (reduce row-splits-multiple (hash-map start 1) splitters))
 
 (defn part1
   [f]
@@ -44,9 +66,16 @@
          (map set/intersection (map set splitters))
          (map count)
          (apply +))))
-    
+
 (defn part2
-  [f])
+  [f]
+  (let [mf (read-data f)
+        splitters (->> mf (map splitter-locs) rest)
+        midpoint (-> mf first count (/ 2) int)
+        beams (generate-beams-multiple midpoint splitters)]
+    (->> beams
+         vals
+         (apply +))))
 
 (comment
   (def testf "data/day07-test.txt")
