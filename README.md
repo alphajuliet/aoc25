@@ -29,3 +29,7 @@ Again, part 1 can be solved with an obvious solution, which is to count each num
 ## Day 6
 
 This was an amusing little exercise in parsing formatted text data. Part 1 was trivial, but part 2 required a lot of splitting and converting vertical digits into numbers. Clojure has a powerful set of functions and predicates for manipulating data; one of the reasons I like it. Not the most elegant code I've written but it got us there. 
+
+## Day 7
+
+This was the first puzzle that got me really thinking, having been down several intuitive but quite wrong rabbit holes. In part 1 I ended up using sets to track the beams as they traversed all the splitters, and this worked well. In part 2, after some sketching and thinking I thought: ah, multisets are the answer, but of course ran out of memory on the input data. Then I finally realised we just need to track multiplicities in a map. I'm sometimes a bit slow but we got to the right answer.
