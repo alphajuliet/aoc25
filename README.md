@@ -33,3 +33,7 @@ This was an amusing little exercise in parsing formatted text data. Part 1 was t
 ## Day 7
 
 This was the first puzzle that got me really thinking, having been down several intuitive but quite wrong rabbit holes. In part 1 I ended up using sets to track the beams as they traversed all the splitters, and this worked well. In part 2, after some sketching and thinking I thought: ah, multisets are the answer, but of course ran out of memory on the input data. Then I finally realised we just need to track multiplicities in a map. I'm sometimes a bit slow but we got to the right answer.
+
+## Day 8
+
+Finally, we get to exercise the graph network library, and this puzzle is made for it. We sort the distances between all the pairs and use that to load in all the nodes and then a bunch of edges. In day one, just the first 1000, and see how many circuits we can form using the `alg/connected-components` call in `Ubergraph`. For part 2, we keep adding edges until the graph is `strongly-connected`. Nice.
