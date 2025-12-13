@@ -37,3 +37,8 @@ This was the first puzzle that got me really thinking, having been down several 
 ## Day 8
 
 Finally, we get to exercise the graph network library, and this puzzle is made for it. We sort the distances between all the pairs and use that to load in all the nodes and then a bunch of edges. In day one, just the first 1000, and see how many circuits we can form using the `alg/connected-components` call in `Ubergraph`. For part 2, we keep adding edges until the graph is `strongly-connected`. Nice.
+
+## Day 9
+
+As usual, part 1 was straightforward -- generate all the rectangles, find their area, and find the biggest. Not so simple for part 2. My algorithm was sound but it was not completing in any reasonable time. I got Claude to help me optimise the code but it was still taking too long. More analysis with Claude helped to identify a sampling approach rather than brute force, and this got the compute time down to nearly 7 seconds. I'll take some credit for the algorithm but props to Claude for the analysis that got a solution in acceptable time.
+
