@@ -42,3 +42,8 @@ Finally, we get to exercise the graph network library, and this puzzle is made f
 
 As usual, part 1 was straightforward -- generate all the rectangles, find their area, and find the biggest. Not so simple for part 2. My algorithm was sound but it was not completing in any reasonable time. I got Claude to help me optimise the code but it was still taking too long. More analysis with Claude helped to identify a sampling approach rather than brute force, and this got the compute time down to nearly 7 seconds. I'll take some credit for the algorithm but props to Claude for the analysis that got a solution in acceptable time.
 
+## Day 10
+
+Some discussion with Claude up front about this puzzle, before touching any code, was useful in understanding how this related to geometry and groups under $\mathbb{Z}/2\mathbb{Z}$. We then discussed approaches and decided that simple BFS was the most efficient in this situation. I coded up the parser and structured the code, and Claude wrote the BFS function, which I can't be arsed doing. Teamwork. 
+
+Part 2 has me stuck though, because the search space is huge for many of the machines in the input data. Claude and I have tried a number of approaches, including greedy heuristics, but nothing seems tractable yet. It goes on hold for now.

@@ -2,13 +2,13 @@
   (:require [clojure.string :as str]
             [clojure.edn :as edn]))
 
-(defn bits->number 
+(defn bits->number
   "Convert a collection of bit positions into a integer
    e.g. `(bits->number '(1 3)) => 10`"
   ;; bits->number : List Integer -> Integer
   [bcoll]
-  (reduce #(+ %1 (bit-shift-left 1 %2)) 
-          0 
+  (reduce #(+ %1 (bit-shift-left 1 %2))
+          0
           bcoll))
 
 (defn parse-line
@@ -26,7 +26,12 @@
      :switches (->> switches
                     (map edn/read-string)
                     (map bits->number))
-     :joltage joltage}))
+     :counters (->> switches
+                    (map edn/read-string))
+     :joltage (-> joltage
+                  (str/replace #"\{" "(")
+                  (str/replace #"\}" ")")
+                  edn/read-string)}))
 
 (defn read-data
  [f]
@@ -36,7 +41,7 @@
       (map parse-line)))
 
 (defn shortest-path
-  "Find shortest path from 0 to target using XOR switches."
+  "Find shortest path using BFS from 0 to target using XOR switches."
   [{:keys [target switches]}]
   (loop [queue (conj clojure.lang.PersistentQueue/EMPTY [0 []])
          visited #{0}]
@@ -53,6 +58,10 @@
                 new-entries (map (fn [[v g]] [v (conj path g)]) neighbors)]
             (recur (into queue' new-entries)
                    (into visited (map first neighbors)))))))))
+
+(defn solve-counters
+  [{:keys [joltage counters]}])
+  
 (defn part1
   [f]
   (let [machines (read-data f)]
@@ -62,7 +71,12 @@
          (apply +))))
 
 (defn part2
- [f])
+  [f]
+  (let [machines (read-data f)]
+    (->> machines
+         (take 10)
+         (pmap solve-counters)
+         (apply +))))
 
 (comment
   (def testf "data/day10-test.txt")
