@@ -1,8 +1,8 @@
 (ns aoc25.day11
-  (:require
-   [aoc25.util :as u]
-   [ubergraph.core :as uber]
-   [clojure.string :as str]))
+  (:require [aoc25.util :as u]
+            [clojure.string :as str]
+            [ubergraph.core :as uber]
+            [ubergraph.alg :as alg]))
 
 (defn make-pairs
   [p]
@@ -31,25 +31,66 @@
                      seq))))]
     (path-finder [start])))
 
+(defn count-paths-between
+  "Count all simple paths between start and end using memoized DFS."
+  [g start end]
+  (let [memo (atom {})]
+    (letfn [(count-paths [current visited]
+              (cond
+                (= current end) 1
+                (visited current) 0
+                :else
+                (let [new-visited (conj visited current)
+                      result (->> (uber/successors g current)
+                                  (remove visited)
+                                  (map #(count-paths % new-visited))
+                                  (reduce + 0))]
+                  result)))]
+      (count-paths start #{}))))
+
+(defn paths-through-nodes
+  "Count paths from start to end passing through all required nodes.
+   Optimized: breaks into segments (start->n1->n2->end) instead of enumerating all paths."
+  [g start end required-nodes]
+  (if (= (count required-nodes) 2)
+    ;; For 2 nodes: count paths through both orderings
+    ;; Path ordering 1: svr -> n1 -> n2 -> out
+    ;; Path ordering 2: svr -> n2 -> n1 -> out
+    (let [[n1 n2] (vec required-nodes)
+          paths1 (* (count-paths-between g start n1)
+                    (count-paths-between g n1 n2)
+                    (count-paths-between g n2 end))
+          paths2 (* (count-paths-between g start n2)
+                    (count-paths-between g n2 n1)
+                    (count-paths-between g n1 end))]
+      (+ paths1 paths2))
+    ;; General fallback (not optimized)
+    (throw (ex-info "Only 2 required nodes supported" {:count (count required-nodes)}))))
+
 (defn part1
   [f]
-  (let [devs (read-data f)]
+  (let [conns (read-data f)]
     (-> (uber/digraph)
-        (uber/add-directed-edges* devs)
+        (uber/add-directed-edges* conns)
         (all-paths "you" "out")
         count)))
 
 (defn part2
-  [f])
+  [f]
+  (let [conns (read-data f)
+        g (-> (uber/digraph)
+              (uber/add-directed-edges* conns))]
+    (paths-through-nodes g "svr" "out" #{"fft" "dac"}))) 
 
 (comment
   (def testf "data/day11-test.txt")
+  (def test2f "data/day11-test2.txt")
   (def inputf "data/day11-input.txt")
-
+ 
   (part1 testf)
   (part1 inputf)
 
-  (part2 testf)
+  (part2 test2f)
   (time (part2 inputf)))
 
 ;; The End
