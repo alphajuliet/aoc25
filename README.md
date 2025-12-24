@@ -46,8 +46,12 @@ As usual, part 1 was straightforward -- generate all the rectangles, find their 
 
 Some discussion with Claude up front about this puzzle, before touching any code, was useful in understanding how this related to geometry and groups under $\mathbb{Z}/2\mathbb{Z}$. We then discussed approaches and decided that simple BFS was the most efficient in this situation. I coded up the parser and structured the code, and Claude wrote the BFS function, which I can't be arsed doing. Teamwork. 
 
-Part 2 has me stuck though, because the search space is huge for many of the machines in the input data. Claude and I have tried a number of approaches, including greedy heuristics, but nothing seems tractable yet. It goes on hold for now.
+Part 2 is in some ways a different problem and it has me stuck because the search space is huge for many of the machines in the input data. Claude and I have tried some different approaches but we're still blowing the compute on the input data. After reluctantly checking out Reddit, I can see that there is a clever recursive bifurcation approach that is computationally feasible, but I'm not going to code it up.
 
 ## Day 11
 
 So, the first part is another excuse to roll out `Ubergraph` and count all the paths. Fortunately, we've seen this before so I have my `all-paths` function ready to go, and it did. Part 2, however, has us starting at a different point in the graph and is, so far, resistant to computation with my algorithms in any reasonable time. I need to think of a smarter way to do this.
+
+## Day 12
+
+This is a partial covering problem, and there the classic approach is with Knuth's DLX algorithm. Claude coded up most of part 1 for me but it's not yet giving me reliable answers. I'm wondering whether to pursue this one, I'm not excited by search algorithms.
