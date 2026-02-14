@@ -54,6 +54,8 @@ Part 2 is in some ways a different problem and it has me stuck because the searc
 
 So, the first part is another excuse to roll out `Ubergraph` and count all the paths. Fortunately, we've seen this before so I have my `all-paths` function ready to go, and it did. Part 2, however, has us starting at a different point in the graph and is, so far, resistant to computation with my algorithms in any reasonable time. I need to think of a smarter way to do this.
 
+So, Claude has identified that using dynamic programming using a reverse search is more appropriate here than DFS, and coded up a better approach that solved it within tens of milliseconds. Nice work, Claude.
+
 ## Day 12
 
 This is a partial covering problem, and there the classic approach is with Knuth's DLX algorithm. Claude coded up most of part 1 for me but it's not yet giving me reliable answers. I'm wondering whether to pursue this one, I'm not excited by search algorithms.

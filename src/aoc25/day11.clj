@@ -31,22 +31,22 @@
                      seq))))]
     (path-finder [start])))
 
-(defn count-paths-between
-  "Count all simple paths between start and end using memoized DFS."
+(defn count-paths-dag
+  "Count all paths from start to end in a DAG using DP.
+   Processes nodes in reverse topological order."
   [g start end]
-  (let [memo (atom {})]
-    (letfn [(count-paths [current visited]
-              (cond
-                (= current end) 1
-                (visited current) 0
-                :else
-                (let [new-visited (conj visited current)
-                      result (->> (uber/successors g current)
-                                  (remove visited)
-                                  (map #(count-paths % new-visited))
-                                  (reduce + 0))]
-                  result)))]
-      (count-paths start #{}))))
+  (let [topo (alg/topsort g)]
+    (-> (reduce
+         (fn [counts node]
+           (if (= node end)
+             (assoc counts node 1N)
+             (assoc counts node
+                    (->> (uber/successors g node)
+                         (map #(get counts % 0N))
+                         (reduce +' 0N)))))
+         {}
+         (reverse topo))
+        (get start 0N))))
 
 (defn paths-through-nodes
   "Count paths from start to end passing through all required nodes.
@@ -57,13 +57,13 @@
     ;; Path ordering 1: svr -> n1 -> n2 -> out
     ;; Path ordering 2: svr -> n2 -> n1 -> out
     (let [[n1 n2] (vec required-nodes)
-          paths1 (* (count-paths-between g start n1)
-                    (count-paths-between g n1 n2)
-                    (count-paths-between g n2 end))
-          paths2 (* (count-paths-between g start n2)
-                    (count-paths-between g n2 n1)
-                    (count-paths-between g n1 end))]
-      (+ paths1 paths2))
+          paths1 (*' (count-paths-dag g start n1)
+                     (count-paths-dag g n1 n2)
+                     (count-paths-dag g n2 end))
+          paths2 (*' (count-paths-dag g start n2)
+                     (count-paths-dag g n2 n1)
+                     (count-paths-dag g n1 end))]
+      (+' paths1 paths2))
     ;; General fallback (not optimized)
     (throw (ex-info "Only 2 required nodes supported" {:count (count required-nodes)}))))
 
