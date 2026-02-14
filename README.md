@@ -1,6 +1,6 @@
 # Advent of Code 2025
 
-My advent-ures in code in AOC 2025, predominantly in my favourite language Clojure, but occasionally in something different if I'm feeling advent-urous.
+My advent-ures in code in [AOC 2025](https://adventofcode.com/2025), predominantly in my favourite language Clojure, but occasionally in something different if I'm feeling advent-urous.
 
 Below is some commentary on the challenges. Look at the source(s) for more detail.
 
@@ -9,6 +9,8 @@ Below is some commentary on the challenges. Look at the source(s) for more detai
 Welcome to AoC, and here's a nice little exercise to warm up. Parse the commands, do some additions modulo 100 as a `scan` operation, and count up the zeroes.
 
 For part 2, we need to keep track of how many time we've gone past zero. My solution looks sounds but it's not working. On day 1?? Need to sort this out.
+
+And it's sorted with a minor change to call zero-crossings for each move.
 
 ## Day 2
 
